@@ -20,14 +20,15 @@ namespace wejsciowki
       int[][] matrix =
       {
         new int[] {1,2,3,4,5},
-        new int[] {1,2,3,4,5},
+        new int[] {1,2,3,4,2},
         new int[] {1,99,3,4,5},
-        new int[] {1,2,3,4,5},
+        new int[] {1,2,3,4,2},
         new int[] {1,2,3,4,5}
       };
       Console.WriteLine("fCol = " + arrayToString(fCol(matrix, 1)));
       Console.WriteLine("fSum = " + fSum(tab));
       Console.WriteLine("fCzestosc = " + String.Join(",", fCzesctosc((tab))));
+      Console.WriteLine("fKolumnaJezeli = " + arrayToString(fKolumnaJezeli(matrix,0,4,5)));
       
 
       Console.ReadKey();
@@ -96,9 +97,9 @@ namespace wejsciowki
       return sumResult;
     }
 
-    public static Dictionary<int, int> fCzesctosc(int[] tab)
+    public static Dictionary<T, int> fCzesctosc<T>(T[] tab)
     {
-      Dictionary<int, int> dictionary = new Dictionary<int, int>();
+      Dictionary<T, int> dictionary = new Dictionary<T, int>();
       for (int i = 0; i < tab.Length; i++)
       {
         if (dictionary.ContainsKey(tab[i]))
@@ -107,8 +108,20 @@ namespace wejsciowki
           dictionary.Add(tab[i], 1);
   
       }
-
       return dictionary;
+    }
+
+    public static int[] fKolumnaJezeli(int[][] tab2d, int orgin, int warunek, int klasa)
+    {
+      List<int> temp = new List<int>();
+
+      for (int i = 0; i < tab2d.Length; i++)
+      {
+        if (tab2d[i][warunek] == klasa)
+          temp.Add(tab2d[i][orgin]);
+      }
+
+      return temp.ToArray();
     }
   }
 }
