@@ -11,6 +11,8 @@ namespace wejsciowki
     static void Main(string[] args)
     {
       int[] tab = { 1, 2, 3, 3, 3, 4, 5, -1, 6, -1 };
+      Console.WriteLine("Tab we = " + arrayToString(tab) + "\n\n");
+
       Console.WriteLine("Min = " + fMin(tab));
       Console.WriteLine("Max = " + fMax(tab));
       Console.WriteLine("Uniq = " + arrayToString(fUniq(tab)));
@@ -25,6 +27,8 @@ namespace wejsciowki
       };
       Console.WriteLine("fCol = " + arrayToString(fCol(matrix, 1)));
       Console.WriteLine("fSum = " + fSum(tab));
+      Console.WriteLine("fCzestosc = " + String.Join(",", fCzesctosc((tab))));
+      
 
       Console.ReadKey();
     }
@@ -92,9 +96,19 @@ namespace wejsciowki
       return sumResult;
     }
 
-    public static void fCzesctosc(int[] tab)
+    public static Dictionary<int, int> fCzesctosc(int[] tab)
     {
-      
+      Dictionary<int, int> dictionary = new Dictionary<int, int>();
+      for (int i = 0; i < tab.Length; i++)
+      {
+        if (dictionary.ContainsKey(tab[i]))
+          dictionary[tab[i]] += 1;
+        else
+          dictionary.Add(tab[i], 1);
+  
+      }
+
+      return dictionary;
     }
   }
 }
