@@ -111,15 +111,14 @@ namespace wejsciowki
       return dictionary;
     }
 
-    public static int[] fKolumnaJezeli(int[][] tab2d, int orgin, int warunek, int klasa)
+    public static T[] fKolumnaJezeli<T>(T[][] tab2d, int orgin, int warunek, T klasa)
     {
-      List<int> temp = new List<int>();
+      List<T> temp = new List<T>();
 
       for (int i = 0; i < tab2d.Length; i++)
-      {
-        if (tab2d[i][warunek] == klasa)
+        if (tab2d[i][warunek].Equals(klasa))
           temp.Add(tab2d[i][orgin]);
-      }
+      
 
       return temp.ToArray();
     }
