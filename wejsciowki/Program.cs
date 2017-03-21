@@ -28,8 +28,18 @@ namespace wejsciowki
       Console.WriteLine("fCol = " + arrayToString(fCol(matrix, 1)));
       Console.WriteLine("fSum = " + fSum(tab));
       Console.WriteLine("fCzestosc = " + String.Join(",", fCzesctosc((tab))));
-      Console.WriteLine("fKolumnaJezeli = " + arrayToString(fKolumnaJezeli(matrix,0,4,5)));
-      
+      Console.WriteLine("fKolumnaJezeli = " + arrayToString(fKolumnaJezeli(matrix, 0, 4, 5)));
+
+
+      Regola r = new Regola();
+      r.dekstryptor.Add(2, "1");
+      r.dekstryptor.Add(3, "1");
+      r.decyzja = "1";
+
+
+      string[] obiekt = new string[] { "1", "1", "1", "1", "3", "1", "1" };
+
+      Console.WriteLine("Czy obiekt spelnia regole: " + czySpelniaRegole(obiekt, r));
 
       Console.ReadKey();
     }
@@ -106,7 +116,7 @@ namespace wejsciowki
           dictionary[tab[i]] += 1;
         else
           dictionary.Add(tab[i], 1);
-  
+
       }
       return dictionary;
     }
@@ -118,9 +128,51 @@ namespace wejsciowki
       for (int i = 0; i < tab2d.Length; i++)
         if (tab2d[i][warunek].Equals(klasa))
           temp.Add(tab2d[i][orgin]);
-      
+
 
       return temp.ToArray();
     }
+
+    public static bool czySpelniaRegole(string[] obiekt, Regola regola)
+    {
+
+      foreach (var val in regola.dekstryptor)
+      {
+        if (obiekt[val.Key - 1] != val.Value)
+          return false;
+      }
+
+      if (obiekt[obiekt.Length - 1] != regola.decyzja)
+        return false;
+
+      return true;
+    }
+
+    /**
+     * Rrgóła 
+     *  deskrytory 
+     *  decyzja
+     *  support(ile obiektów ich popiera)
+     */
+
+    /**
+     * DESKRYTPOR
+      * Słownik<int, string>
+     */
+
+    /**
+     * Decyzja
+     *  String
+     */
+
+    /**
+     * Support 
+     *   Int 
+     */
+
+    // 1. Przechowywanie regoly
+    // 2. Czy regoła sprzeczna
+    // 3. Czy obiekt spełnia regołę
+    // 4. Kombinacje bez powtórzeń (KWCombinatroics)
   }
 }
