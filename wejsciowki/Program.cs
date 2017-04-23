@@ -31,7 +31,7 @@ namespace wejsciowki
       Console.WriteLine("fKolumnaJezeli = " + arrayToString(fKolumnaJezeli(matrix, 0, 4, 5)));
 
 
-      Regola r = new Regola();
+      Regula r = new Regula();
       r.dekstryptor.Add(2, "1");
       r.dekstryptor.Add(3, "1");
       r.decyzja = "1";
@@ -133,7 +133,7 @@ namespace wejsciowki
       return temp.ToArray();
     }
 
-    public static bool czySpelniaRegole(string[] obiekt, Regola regola)
+    public static bool czySpelniaRegole(string[] obiekt, Regula regola)
     {
 
       foreach (var val in regola.dekstryptor)
@@ -148,6 +148,32 @@ namespace wejsciowki
       return true;
     }
 
+    public static Regula podajRegole(string[] obiekt, int[] kombinacje)
+    {
+      Regula regola = new Regula();
+
+      for (int i = 0; i < kombinacje.Length; i++)
+      {
+        regola.dekstryptor.Add(kombinacje[i], obiekt[kombinacje[i]]);
+      }
+
+      regola.decyzja = obiekt.Last();
+
+      return regola;
+    }
+
+    public static bool czyRegulaNieSprzeczna(Regula regula, string[][] system)
+    {
+      for (int i = 0; i < system.Length; i++)
+      {
+        if (czySpelniaRegole(system[i], regula) && system[i].Last() != regula.decyzja)
+        {
+          return false;
+        }
+      }
+      return true;
+    }
+
     /**
      * Rrgóła 
      *  deskrytory 
@@ -157,7 +183,7 @@ namespace wejsciowki
 
     /**
      * DESKRYTPOR
-      * Słownik<int, string>
+     * Słownik<int, string>
      */
 
     /**
@@ -174,5 +200,87 @@ namespace wejsciowki
     // 2. Czy regoła sprzeczna
     // 3. Czy obiekt spełnia regołę
     // 4. Kombinacje bez powtórzeń (KWCombinatroics)
+    // 5. Tworzenie regoly
+    // 6. Liczenie supportu
+
+
+    // 1. Macierz nieodróznialnosci
+    // a) komórka 
+    // 2. Kombinacje
+    // 3. Czy kombinacja występuje
+    //  a) w komórce 
+    //  b) w kolumnie
+    //  4. Sprawdzamy czy ma podrgule
+
+    public static int[] PodajKomorke(Obiekt obiekt1, Obiekt obiekt2)
+    {
+      List<int> wynik = new List<int>();
+      if (obiekt1.decyzja == obiekt2.decyzja)
+        return null;
+
+      foreach (var deksryptor in obiekt1.deskryptory)
+        if (obiekt2.deskryptory[deksryptor.Key] == deksryptor.Value)
+          wynik.Add(deksryptor.Key);
+
+      return wynik.ToArray();
+    }
+
+    public static int[][][] podajMacierzNieOdroznialnosci(List<Obiekt> system)
+    {
+      int[][][] result = new int[system.Count][][];
+
+      for (int i = 0; i < system.Count; i++)
+      {
+        result[i] = new int[system.Count][];
+        for (int j = 0; j < system.Count; j++)
+        {
+          result[i][j] = PodajKomorke(system[i], system[j]);
+        }
+      }
+
+      return result;
+    }
+
+    public static bool czyJestWKomorce(int[] komorka, int[] kombinacja)
+    {
+      for (int i = 0; i < kombinacja.Length; i++)
+        if (!komorka.Contains(kombinacja[i]))
+          return false;
+
+      return true;
+    }
+
+    public static bool czyJestWWierszu(int[][] wiersz, int[] kombinacja)
+    {
+      for (int i = 0; i < wiersz.Length; i++)
+      {
+        if (czyJestWKomorce(wiersz[i], kombinacja))
+          return true;
+      }
+
+      return false;
+    }
+
+    public static bool czyZawieraRegule(Regula r1, Regula r2)
+    {
+      foreach (var desk2 in r2.dekstryptor)
+      {
+        if (!r1.dekstryptor.ContainsKey(desk2.Key) || r1.dekstryptor[desk2.Key] != desk2.Value)
+          return false;
+      }
+      
+      return true;
+    }
+
+    public static bool czyZaweieraPodregule(Regula regula, Regula[] reguly)
+    {
+      foreach (var reg in reguly)
+        if (czyZawieraRegule(regula, reg))
+          return true;
+
+      return false;
+    }
+
+
   }
 }

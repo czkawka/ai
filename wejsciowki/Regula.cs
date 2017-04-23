@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace wejsciowki
 {
-  class Regola
+  class Regula
   {
     public Dictionary<int, string> dekstryptor = new Dictionary<int, string>();
     public string decyzja;
