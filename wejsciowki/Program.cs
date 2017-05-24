@@ -212,6 +212,7 @@ namespace wejsciowki
     //  b) w kolumnie
     //  4. Sprawdzamy czy ma podrgule
 
+
     public static int[] PodajKomorke(Obiekt obiekt1, Obiekt obiekt2)
     {
       List<int> wynik = new List<int>();
@@ -282,5 +283,17 @@ namespace wejsciowki
     }
 
 
+    //  LEM 2
+    // 1. Dzielimy system na koncepty
+    // 2. Pobieranie konceptów
+    // 3. 
+
+    /* ALGORYTM APRIORI */
+    // moc zbioru musi być conajmniej k
+    // 1. czyZawiera(string[], string) (boolean)
+    // 2. ileRazySieMiesci(string[][], string[]) (int)
+    // 2.1. sprawdzCzyZaweieraSie(string[], string[]) (boolean)
+    // 3. podzbior(string[], kombinacja) (string[])
+    // 4. przeciecie wlasnosci apriori
   }
 }
